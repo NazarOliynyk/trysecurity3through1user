@@ -63,6 +63,16 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/goToSecuredPage")
+    public String goToSecuredPage(){
+        return "securedPage";
+    }
+
+    @PostMapping("/admin/goToSecuredPage2")
+    public String goToSecuredPage2(){
+        return "securedPage2";
+    }
+
     String name = "";
     String className = "";
     String username = "";

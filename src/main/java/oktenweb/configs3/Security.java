@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -43,10 +44,13 @@ public class Security extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf()
+                .disable()
                 .authorizeRequests()
                 .antMatchers("/", "/saveClient", "/saveRestaurant",  "/clients" ,"/restaurants").permitAll() // everyone can access on url: "/", "/home"
                 .anyRequest().authenticated() // other url need auth
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/admin/goToSecuredPage2").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")
